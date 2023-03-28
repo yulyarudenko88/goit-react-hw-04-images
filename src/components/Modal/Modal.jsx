@@ -1,35 +1,38 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { Overlay, ImageModal } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.checkEvent);
-  }
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.checkEvent);
-  }
+export const Modal = ({ children, onClose }) => {
+  useEffect(() => {
+    const onCloseESC = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
 
-  checkEvent = e => {
-    if (e.code === 'Escape' || e.target === e.currentTarget) {
-      this.props.onClose();
+    window.addEventListener('keydown', onCloseESC);
+
+    return () => {
+      window.removeEventListener('keydown', onCloseESC);
+    };
+  }, [onClose]);
+
+  const onCloseOverlay = e => {
+    if (e.target === e.currentTarget) {
+      onClose();
     }
   };
 
-  render() {
-    const { children, onClose } = this.props;
-
-    return createPortal(
-      <Overlay onClick={this.checkEvent}>
-        <ImageModal onClick={onClose}>{children}</ImageModal>
-      </Overlay>,
-      modalRoot
-    );
-  }
-}
+  return createPortal(
+    <Overlay onClick={onCloseOverlay}>
+      <ImageModal onClick={onClose}>{children}</ImageModal>
+    </Overlay>,
+    modalRoot
+  );
+};
 
 Modal.propTypes = {
   children: PropTypes.object.isRequired,
