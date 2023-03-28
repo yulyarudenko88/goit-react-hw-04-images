@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { VscSearch } from 'react-icons/vsc';
 import {
@@ -8,50 +8,82 @@ import {
   SearchFormInput,
 } from './Searchbar.styled';
 
-export default class Searchar extends Component {
-  state = {
-    searchWord: '',
-  };
+export const Searchbar = ({ onSubmit }) => {
+  const [searchWord, setSearchWord] = useState('');
 
-  handleChange = e => {
-    const { value } = e.target;
-    this.setState({ searchWord: value.toLowerCase() });
-  };
+  const handleChange = e => setSearchWord(e.target.value.toLowerCase());
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.searchWord);
-    this.reset();
+    onSubmit(searchWord);
+    reset();
   };
 
-  reset = () => {
-    this.setState({ searchWord: '' });
-  };
+  const reset = () => setSearchWord('');
 
-  render() {
-    const { searchWord } = this.state;
+  return (
+    <Header>
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchButton type="submit">
+          <VscSearch size={20} />
+        </SearchButton>
 
-    return (
-      <Header>
-        <SearchForm onSubmit={this.handleSubmit}>
-          <SearchButton type="submit">
-            <VscSearch size={20} />
-          </SearchButton>
+        <SearchFormInput
+          type="text"
+          autocomplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={searchWord}
+          onChange={handleChange}
+        />
+      </SearchForm>
+    </Header>
+  );
+};
+// export default class Searchar extends Component {
+//   state = {
+//     searchWord: '',
+//   };
 
-          <SearchFormInput
-            type="text"
-            autocomplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value={searchWord}
-            onChange={this.handleChange}
-          />
-        </SearchForm>
-      </Header>
-    );
-  }
-}
+// handleChange = e => {
+//   const { value } = e.target;
+//   this.setState({ searchWord: value.toLowerCase() });
+// };
 
-Searchar.propTypes = {
+// handleSubmit = e => {
+//   e.preventDefault();
+//   this.props.onSubmit(this.state.searchWord);
+//   this.reset();
+// };
+
+//   reset = () => {
+//     this.setState({ searchWord: '' });
+//   };
+
+//   render() {
+//     const { searchWord } = this.state;
+
+// return (
+//   <Header>
+//     <SearchForm onSubmit={this.handleSubmit}>
+//       <SearchButton type="submit">
+//         <VscSearch size={20} />
+//       </SearchButton>
+
+//       <SearchFormInput
+//         type="text"
+//         autocomplete="off"
+//         autoFocus
+//         placeholder="Search images and photos"
+//         value={searchWord}
+//         onChange={this.handleChange}
+//       />
+//     </SearchForm>
+//   </Header>
+// );
+//   }
+// }
+
+Searchbar.propTypes = {
   onSubmit: PropTypes.func,
 };
