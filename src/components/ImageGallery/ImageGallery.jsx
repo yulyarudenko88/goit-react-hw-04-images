@@ -17,7 +17,7 @@ export const ImageGallery = ({ images }) => (
 );
 
 ImageGallery.propTypes = {
-  contacts: PropTypes.arrayOf(
+  images: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.string.isRequired,
       webformatURL: PropTypes.string.isRequired,
