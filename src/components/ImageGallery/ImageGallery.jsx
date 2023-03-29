@@ -17,5 +17,12 @@ export const ImageGallery = ({ images }) => (
 );
 
 ImageGallery.propTypes = {
-  images: PropTypes.array.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    })
+  ),
 };
