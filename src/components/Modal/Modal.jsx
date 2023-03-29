@@ -28,7 +28,7 @@ export const Modal = ({ children, onClose }) => {
 
   return createPortal(
     <Overlay onClick={onCloseOverlay}>
-      <ImageModal onClick={onClose}>{children}</ImageModal>
+      <ImageModal>{children}</ImageModal>
     </Overlay>,
     modalRoot
   );
