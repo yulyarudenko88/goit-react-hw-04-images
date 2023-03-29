@@ -15,7 +15,6 @@ export const App = () => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [totalImages, setTotalImages] = useState(null);
-  // const [error, setError] = useState(false);
 
   useEffect(() => {
     if (!searchQuery) {
@@ -33,7 +32,6 @@ export const App = () => {
       } else {
         try {
           const { totalHits, hits } = await fetchImages(searchQuery, queryPage);
-          // console.log(totalHits, hits);
 
           if (hits.length === 0) {
             toast.warn(
@@ -52,7 +50,6 @@ export const App = () => {
             setLoading(false);
           }
         } catch (error) {
-          // setError(true);
           toast.error('Sorry, something go wrong! Try again!');
         }
       }
