@@ -13,12 +13,8 @@ export const Overlay = styled.div`
 `;
 
 export const ImageModal = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -45%);
-  width: 700px;
-  height: 500px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 24px);
   border-radius: 4px;
   overflow: hidden;
 `;
